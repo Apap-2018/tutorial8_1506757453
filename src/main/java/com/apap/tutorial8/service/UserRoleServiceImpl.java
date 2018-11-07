@@ -27,10 +27,18 @@ public class UserRoleServiceImpl implements UserRoleService{
 	}
 
 	@Override
-	public void updatePassword(UserRoleModel user) {
+	public void updatePassword(String username, String newPassword) {
 		// TODO Auto-generated method stub
-		String pass = encrypt(user.getPassword());
+		UserRoleModel user = userDb.findByUsername(username);
+		String pass = encrypt(newPassword);
 		user.setPassword(pass);
 		userDb.save(user);
 	}
+
+	@Override
+	public UserRoleDb getUserRoleDb() {
+		// TODO Auto-generated method stub
+		return userDb;
+	}
+	
 }

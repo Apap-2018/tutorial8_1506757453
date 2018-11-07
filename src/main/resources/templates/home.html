@@ -14,6 +14,14 @@
     <div class="container-fluid">
         <h2 th:text="'Hello ' + ${#httpServletRequest.remoteUser} + ' !'">Login as</h2>
         
+        <div th:if="${updateResponse} != null">
+        	<div th:if="${updateResponse != 'success'}" class="alert alert-danger text-center" style="margin-left:25%; margin-right:25%;">
+				<a th:text="${updateResponse}"></a>
+			</div>
+			<div th:if="${updateResponse == 'success'}" class="alert alert-success text-center" style="margin-left:25%; margin-right:25%;">
+				<a th:text="'Selamat! Password berhasil diperbaharui!'"></a>
+			</div>
+        </div>
         <!-- 
         <div class="row">
             <div class="col-md-6">
@@ -39,15 +47,16 @@
                         <form th:action="@{/user/addUser}" method="post">
                         	<div class="row form-group">
                         		<label class="col-sm-4">User Name</label>
-                        		<input class="col-sm-8 form-control input-sm" type="text" name="username"/>
+                        		<input required class="col-sm-8 form-control input-sm" type="text" name="username"/>
                         	</div>
                         	<div class="row form-group">
                         		<label class="col-sm-4">Password: </label>
-                        		<input class="col-sm-8 form-control input-sm" type="password" name="password"/>
+                        		<input pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="Harus mengandung huruf & angka, minimal 8 karakter"
+                        		required class="col-sm-8 form-control input-sm" type="password" name="password"/>
                         	</div>
                         	<div class="row form-group">
                         		<label class="col-sm-4">Role: </label>
-                        		<input class="col-sm-8 form-control input-sm" type="text" name="role"/>
+                        		<input required class="col-sm-8 form-control input-sm" type="text" name="role"/>
                         	</div>
                         	<div>
                         		<button type="submit" class="btn btn-primary">Simpan</button>
@@ -65,15 +74,17 @@
                         <form th:action="@{/user/updatePassword}" method="post">
                         	<div class="row form-group">
                         		<label class="col-sm-4">Password Lama:</label>
-                        		<input class="col-sm-8 form-control input-sm" type="password" name="oldPassword"/>
+                        		<input required class="col-sm-8 form-control input-sm" type="password" name="oldPassword"/>
                         	</div>
                         	<div class="row form-group">
                         		<label class="col-sm-4">Password Baru:</label>
-                        		<input class="col-sm-8 form-control input-sm" type="password" name="password"/>
+                        		<input pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="Harus mengandung huruf & angka, minimal 8 karakter" 
+                        		required class="col-sm-8 form-control input-sm" type="password" name="password"/>
                         	</div>
                         	<div class="row form-group">
                         		<label class="col-sm-4">Konfirmasi Password Baru: </label>
-                        		<input class="col-sm-8 form-control input-sm" type="password" name="confirmPassword"/>
+                        		<input pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="Harus mengandung huruf & angka, minimal 8 karakter" 
+                        		required class="col-sm-8 form-control input-sm" type="password" name="confirmPassword"/>
                         	</div>
                         	<div>
                         		<button type="submit" class="btn btn-primary">Simpan</button>
@@ -94,6 +105,7 @@
                         <div class="card-body">
                             <label for="licenseNumber">License Number:</label>
                             <input type="text" name="licenseNumber" class="form-control" />
+                            <br>
                             <button type="submit" class="btn btn-primary">Cari</button>
                         </div>
                     </form>
